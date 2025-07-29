@@ -91,13 +91,51 @@
         </div>
     </section>
 
-    <section class="container">
-        <h4 class="text-center">Por que sua participação importa?</h4>
-        <p class="text-center mt-3">
-            A democracia se fortalece quando todos têm voz. Sua opinião será
-            considerada nos relatórios finais entregues ao Congresso Nacional.
-            Juntos, podemos construir um sistema mais justo.
-        </p>
+    <section class="mt-5 bg-primary text-white p-5 rounded shadow">
+        <h4 class="text-center mb-4">Fotos e Vídeos do Evento</h4>
+
+        <div id="carrosselMidia" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <!-- Slide 1 – Imagem -->
+                <div class="carousel-item active">
+                    <img src="image/foto1.jpg" class="d-block w-100 rounded" alt="Foto do evento 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Momento de Abertura</h5>
+                    </div>
+                </div>
+
+                <!-- Slide 2 – Vídeo -->
+                <div class="carousel-item">
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/SEU_VIDEO_ID" title="Vídeo do Evento"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Resumo da Sessão</h5>
+                    </div>
+                </div>
+
+                <!-- Slide 3 – Imagem -->
+                <div class="carousel-item">
+                    <img src="image/foto2.jpg" class="d-block w-100 rounded" alt="Foto do evento 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Participação Popular</h5>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carrosselMidia" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carrosselMidia" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
     </section>
 
     <section class="container text-center mt-5 bg-light p-5 rounded shadow">
@@ -109,10 +147,23 @@
         </p>
     </section>
 
-    <footer>
-        <p>
-            &copy; 2025 Turma da UniRios 2025. Todos os direitos reservados.
+    <br>
+
+    <footer class="bg-dark text-white text-center py-4">
+        <p class="mb-2">
+            &copy; 2025 Turma da UniRios. Todos os direitos reservados.
         </p>
+        <div>
+            <a href="https://www.instagram.com/seu_perfil" target="_blank" class="text-white me-3 fs-4">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/seu_canal" target="_blank" class="text-white me-3 fs-4">
+                <i class="bi bi-youtube"></i>
+            </a>
+            <a href="https://www.tiktok.com/@seu_usuario" target="_blank" class="text-white fs-4">
+                <i class="bi bi-tiktok"></i>
+            </a>
+        </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
