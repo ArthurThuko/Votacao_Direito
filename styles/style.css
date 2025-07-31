@@ -52,3 +52,32 @@ footer {
 .form-label {
     font-weight: 500;
 }
+
+#formVotacao {
+    background-color: #061927;
+    color: #F2F5F5;
+}
+
+#formVotacao strong {
+    color: #C9A13C;
+}
+
+.aluno-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.aluno-card:hover {
+    transform: scale(1.05);
+}
+
+.selecionado-favor {
+    background-color: #7da4c4;
+    transform: scale(1.10);
+    box-shadow: 0 5px 20px #0d6efd4d;
+}
+
+.selecionado-contra {
+    background-color: #c47d7d;
+    transform: scale(1.10);
+    box-shadow: 0 5px 20px #fd0d0d4d;
+}

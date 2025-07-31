@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Votação de Direito</title>
-    <link rel="icon" type="image/png" href="image/icone.ico" />
+    <link rel="icon" type="image/png" href="../image/icone.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link href="../styles/style.css" rel="stylesheet" />
@@ -16,49 +16,56 @@
     <div id="navbar"></div>
 
     <div class="container">
-        <div class="form-section">
+        <div class="form-section" id="formVotacao">
             <h2 class="mb-4 text-center">- Formulário de Votação -</h2>
 
             <form>
                 <div class="mb-4">
-                    <label class="form-label">Aluno destaque da equipe <strong>a favor</strong>:</label>
-                    <div class="d-flex justify-content-between" id="alunosContainer"></div>
+                    <label class="form-label">Aluno destaque da equipe <strong>A FAVOR</strong>:</label>
+                    <div class="d-flex justify-content-between flex-wrap" id="alunosFavorContainer"></div>
                     <input type="hidden" id="alunoFavor" name="alunoFavor" />
                 </div>
 
                 <div class="mb-4">
-                    <label for="alunoContra" class="form-label">Aluno destaque da equipe
-                        <strong>contra</strong>:</label>
-                    <input type="text" id="alunoContra" class="form-control" placeholder="Digite o nome do aluno">
-                </div>
-
-                <!-- Avaliações com régua -->
-                <div class="mb-4">
-                    <label for="debateNota" class="form-label">Quão bom foi o debate? (1 a 10)</label>
-                    <input type="range" class="form-range" min="1" max="10" id="debateNota">
+                    <label class="form-label">Aluno destaque da equipe <strong>CONTRA</strong>:</label>
+                    <div class="d-flex justify-content-between flex-wrap" id="alunosContraContainer"></div>
+                    <input type="hidden" id="alunoContra" name="alunoContra" />
                 </div>
 
                 <div class="mb-4">
-                    <label for="tecnicoNota" class="form-label">Nível técnico da discussão (1 a 10)</label>
-                    <input type="range" class="form-range" min="1" max="10" id="tecnicoNota">
+                    <label for="debateNota" class="form-label">Quão bom foi o debate? (0 a 10)</label>
+                    <input type="range" class="form-range" min="0" max="10" id="debateNota">
                 </div>
 
                 <div class="mb-4">
-                    <label for="argumentoNota" class="form-label">Qualidade dos argumentos (1 a 10)</label>
-                    <input type="range" class="form-range" min="1" max="10" id="argumentoNota">
+                    <label for="tecnicoNota" class="form-label">Nível técnico da discussão (0 a 10)</label>
+                    <input type="range" class="form-range" min="0" max="10" id="tecnicoNota">
                 </div>
 
-                <!-- Voto final -->
                 <div class="mb-4">
-                    <label class="form-label d-block">Após o debate, sua posição é:</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="posicaoFinal" id="aFavor" value="favor">
-                        <label class="form-check-label" for="aFavor">A Favor</label>
+                    <label for="argumentoNota" class="form-label">Qualidade dos argumentos (0 a 10)</label>
+                    <input type="range" class="form-range" min="0" max="10" id="argumentoNota">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label d-block mb-3">Após o debate, sua posição é:</label>
+
+                    <div class="d-flex gap-3" id="posicaoContainer">
+                        <div class="card text-center posicao-card" data-value="favor">
+                            <div class="card-body">
+                                <img src="image/icone_corrente.png" alt="Libertação" width="200">
+                                <strong class="text-success">A FAVOR</strong>
+                            </div>
+                        </div>
+                        <div class="card text-center posicao-card" data-value="contra">
+                            <div class="card-body">
+                                <img src="image/icone_sirene.png" alt="Condenação" width="200">
+                                <strong class="text-danger">CONTRA</strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="posicaoFinal" id="contra" value="contra">
-                        <label class="form-check-label" for="contra">Contra</label>
-                    </div>
+
+                    <input type="hidden" name="posicaoFinal" id="posicaoFinal" />
                 </div>
 
                 <!-- Botão de envio -->
