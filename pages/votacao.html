@@ -32,33 +32,40 @@
                     <input type="hidden" id="alunoContra" name="alunoContra" />
                 </div>
 
-                <!-- Avaliações com régua -->
                 <div class="mb-4">
-                    <label for="debateNota" class="form-label">Quão bom foi o debate? (1 a 10)</label>
-                    <input type="range" class="form-range" min="1" max="10" id="debateNota">
+                    <label for="debateNota" class="form-label">Quão bom foi o debate? (0 a 10)</label>
+                    <input type="range" class="form-range" min="0" max="10" id="debateNota">
                 </div>
 
                 <div class="mb-4">
-                    <label for="tecnicoNota" class="form-label">Nível técnico da discussão (1 a 10)</label>
-                    <input type="range" class="form-range" min="1" max="10" id="tecnicoNota">
+                    <label for="tecnicoNota" class="form-label">Nível técnico da discussão (0 a 10)</label>
+                    <input type="range" class="form-range" min="0" max="10" id="tecnicoNota">
                 </div>
 
                 <div class="mb-4">
-                    <label for="argumentoNota" class="form-label">Qualidade dos argumentos (1 a 10)</label>
-                    <input type="range" class="form-range" min="1" max="10" id="argumentoNota">
+                    <label for="argumentoNota" class="form-label">Qualidade dos argumentos (0 a 10)</label>
+                    <input type="range" class="form-range" min="0" max="10" id="argumentoNota">
                 </div>
 
-                <!-- Voto final -->
                 <div class="mb-4">
-                    <label class="form-label d-block">Após o debate, sua posição é:</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="posicaoFinal" id="aFavor" value="favor">
-                        <label class="form-check-label" for="aFavor">A Favor</label>
+                    <label class="form-label d-block mb-3">Após o debate, sua posição é:</label>
+
+                    <div class="d-flex gap-3" id="posicaoContainer">
+                        <div class="card text-center posicao-card" data-value="favor">
+                            <div class="card-body">
+                                <img src="image/icone_corrente.png" alt="Libertação" width="200">
+                                <strong class="text-success">A FAVOR</strong>
+                            </div>
+                        </div>
+                        <div class="card text-center posicao-card" data-value="contra">
+                            <div class="card-body">
+                                <img src="image/icone_sirene.png" alt="Condenação" width="200">
+                                <strong class="text-danger">CONTRA</strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="posicaoFinal" id="contra" value="contra">
-                        <label class="form-check-label" for="contra">Contra</label>
-                    </div>
+
+                    <input type="hidden" name="posicaoFinal" id="posicaoFinal" />
                 </div>
 
                 <!-- Botão de envio -->
