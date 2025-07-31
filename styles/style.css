@@ -37,3 +37,16 @@ footer {
     text-align: center;
     padding: 20px 0;
 }
+
+.form-section {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.form-label {
+    font-weight: 500;
+}
