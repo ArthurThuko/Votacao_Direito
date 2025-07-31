@@ -16,20 +16,20 @@
     <div id="navbar"></div>
 
     <div class="container">
-        <div class="form-section">
+        <div class="form-section" id="formVotacao">
             <h2 class="mb-4 text-center">- Formulário de Votação -</h2>
 
             <form>
                 <div class="mb-4">
-                    <label class="form-label">Aluno destaque da equipe <strong>a favor</strong>:</label>
-                    <div class="d-flex justify-content-between" id="alunosContainer"></div>
+                    <label class="form-label">Aluno destaque da equipe <strong>A FAVOR</strong>:</label>
+                    <div class="d-flex justify-content-between flex-wrap" id="alunosFavorContainer"></div>
                     <input type="hidden" id="alunoFavor" name="alunoFavor" />
                 </div>
 
                 <div class="mb-4">
-                    <label for="alunoContra" class="form-label">Aluno destaque da equipe
-                        <strong>contra</strong>:</label>
-                    <input type="text" id="alunoContra" class="form-control" placeholder="Digite o nome do aluno">
+                    <label class="form-label">Aluno destaque da equipe <strong>CONTRA</strong>:</label>
+                    <div class="d-flex justify-content-between flex-wrap" id="alunosContraContainer"></div>
+                    <input type="hidden" id="alunoContra" name="alunoContra" />
                 </div>
 
                 <!-- Avaliações com régua -->
