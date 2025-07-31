@@ -4,7 +4,7 @@ body {
 }
 
 .hero {
-    background-image: url(image/fundo_justica.jpg);
+    background-image: url(../image/fundo_justica.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
