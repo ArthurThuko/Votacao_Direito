@@ -63,6 +63,21 @@ function renderizarAlunos(alunos, containerId, inputId, classeSelecionado) {
     });
 }
 
-// Renderizar os dois blocos
 renderizarAlunos(alunosFavor, "alunosFavorContainer", "alunoFavor", "selecionado-favor");
 renderizarAlunos(alunosContra, "alunosContraContainer", "alunoContra", "selecionado-contra");
+//Votos dos Alunos Destaques
+
+const posicaoCards = document.querySelectorAll('.posicao-card');
+const inputPosicao = document.getElementById('posicaoFinal');
+
+posicaoCards.forEach(card => {
+    card.addEventListener('click', () => {
+        // Remove seleção anterior
+        posicaoCards.forEach(c => c.classList.remove('selecionado'));
+
+        // Marca o clicado
+        card.classList.add('selecionado');
+        inputPosicao.value = card.getAttribute('data-value');
+    });
+});
+//Voto do Resultado do Debate
