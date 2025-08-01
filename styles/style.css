@@ -81,3 +81,20 @@ footer {
     transform: scale(1.10);
     box-shadow: 0 5px 20px #fd0d0d4d;
 }
+
+.posicao-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+}
+
+.posicao-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.posicao-card.selecionado {
+    border-color: #C9A13C;
+    box-shadow: 0 0 10px #C9A13C;
+    transform: scale(1.05);
+}
