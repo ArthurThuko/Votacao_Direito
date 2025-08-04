@@ -96,5 +96,5 @@ footer {
 .posicao-card.selecionado {
     border-color: #C9A13C;
     box-shadow: 0 0 10px #C9A13C;
-    transform: scale(1.05);
+    transform: scale(1.10);
 }

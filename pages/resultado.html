@@ -19,35 +19,44 @@
         <div class="form-section" id="formVotacao">
             <h2 class="mb-4 text-center">- Resultado da Votação -</h2>
 
-            <div class="mb-4">
-                <label class="form-label">Aluno destaque da equipe <strong style="color: rgb(81, 135, 235);">A
-                        FAVOR</strong>:</label>
-                <div class="d-flex justify-content-between flex-wrap" id="alunosFavorContainer"></div>
-                <input type="hidden" id="alunoFavor" name="alunoFavor" />
+            <div class="mb-4 d-flex flex-column justify-content-center align-items-center" style="height: auto;">
+                <p class="form-label text-center">Aluno destaque da equipe <strong style="color: rgb(81, 135, 235);">A
+                        FAVOR</strong>:</p>
+
+                <div class="text-center">
+                    <img src="../image/usuario_generico.png" class="card-img-top rounded-circle mx-auto mt-3"
+                        style="width:250px; height:250px; object-fit: cover;" alt="Foto de ">
+                    <div class="card-body p-2">
+                        <p class="card-text mb-0" style="font-size: 15px; font-weight: bold;">Fulano</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4 d-flex flex-column justify-content-center align-items-center" style="height: auto;">
+                <p class="form-label text-center">Aluno destaque da equipe <strong style="color: rgb(226, 79, 79);">A
+                        FAVOR</strong>:</p>
+
+                <div class="text-center">
+                    <img src="../image/usuario_generico.png" class="card-img-top rounded-circle mx-auto mt-3"
+                        style="width:250px; height:250px; object-fit: cover;" alt="Foto de ">
+                    <div class="card-body p-2">
+                        <p class="card-text mb-0" style="font-size: 15px; font-weight: bold;">Fulano</p>
+                    </div>
+                </div>
             </div>
 
             <div class="mb-4">
-                <label class="form-label">Aluno destaque da equipe <strong
-                        style="color: rgb(226, 79, 79);">CONTRA</strong>:</label>
-                <div class="d-flex justify-content-between flex-wrap" id="alunosContraContainer"></div>
-                <input type="hidden" id="alunoContra" name="alunoContra" />
+                <p for="debateNota" class="form-label">Quão bom foi o debate? <strong>(0 a 10)</strong></p>
             </div>
 
             <div class="mb-4">
-                <label for="debateNota" class="form-label">Quão bom foi o debate? <strong>(0 a 10)</strong></label>
-                <input type="range" class="form-range" min="0" max="10" id="debateNota">
+                <p for="tecnicoNota" class="form-label">Nível técnico da discussão <strong>(0 a
+                        10)</strong></p>
             </div>
 
             <div class="mb-4">
-                <label for="tecnicoNota" class="form-label">Nível técnico da discussão <strong>(0 a
-                        10)</strong></label>
-                <input type="range" class="form-range" min="0" max="10" id="tecnicoNota">
-            </div>
-
-            <div class="mb-4">
-                <label for="argumentoNota" class="form-label">Qualidade dos argumentos <strong>(0 a
-                        10)</strong></label>
-                <input type="range" class="form-range" min="0" max="10" id="argumentoNota">
+                <p for="argumentoNota" class="form-label">Qualidade dos argumentos <strong>(0 a
+                        10)</strong></p>
             </div>
 
             <div class="mb-4">
