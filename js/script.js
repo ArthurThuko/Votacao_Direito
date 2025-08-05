@@ -72,12 +72,40 @@ const inputPosicao = document.getElementById('posicaoFinal');
 
 posicaoCards.forEach(card => {
     card.addEventListener('click', () => {
-        // Remove seleção anterior
         posicaoCards.forEach(c => c.classList.remove('selecionado'));
 
-        // Marca o clicado
         card.classList.add('selecionado');
         inputPosicao.value = card.getAttribute('data-value');
     });
 });
-//Voto do Resultado do Debate
+//Voto Geral do Debate
+
+document.querySelector("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const alunoFavor = document.getElementById("alunoFavor").value;
+    const alunoContra = document.getElementById("alunoContra").value;
+    const notaDebate = document.getElementById("debateNota").value;
+    const notaTecnica = document.getElementById("tecnicoNota").value;
+    const notaArgumento = document.getElementById("argumentoNota").value;
+    const posicaoFinal = document.getElementById("posicaoFinal").value;
+
+    const dados = {
+        alunoFavor,
+        alunoContra,
+        notaDebate: parseInt(notaDebate),
+        notaTecnica: parseInt(notaTecnica),
+        notaArgumento: parseInt(notaArgumento),
+        posicaoFinal,
+    };
+
+    const resposta = await fetch("http://localhost:3000/votar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados),
+    });
+
+    const resultado = await resposta.json();
+    alert(resultado.message || "Voto registrado!");
+});
+//integração com o Banco de Dados
