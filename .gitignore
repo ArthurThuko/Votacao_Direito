@@ -1,0 +1,3 @@
+# Ignora dependências e banco local
+/backend/node_modules/
+/backend/votacao.db

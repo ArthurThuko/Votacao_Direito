@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Votação de Direito</title>
+    <link rel="icon" type="image/png" href="../image/icone.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link href="../styles/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <div class="container">
+        <div class="form-section" id="formVotacao">
+            <h2 class="mb-4 text-center">- Resultado da Votação -</h2>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center mb-4">
+                        <p class="form-label text-center">Aluno destaque da equipe
+                            <strong style="color: rgb(81, 135, 235);">A FAVOR</strong>:
+                        </p>
+                        <div class="text-center">
+                            <img src="../image/usuario_generico.png" class="card-img-top rounded-circle mx-auto mt-3"
+                                style="width:250px; height:250px; object-fit: cover;" alt="Foto de ">
+                            <div class="card-body p-2">
+                                <p class="card-text mb-0" style="font-size: 15px; font-weight: bold;">Fulano</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center mb-4">
+                        <p class="form-label text-center">Aluno destaque da equipe
+                            <strong style="color: rgb(226, 79, 79);">A FAVOR</strong>:
+                        </p>
+                        <div class="text-center">
+                            <img src="../image/usuario_generico.png" class="card-img-top rounded-circle mx-auto mt-3"
+                                style="width:250px; height:250px; object-fit: cover;" alt="Foto de ">
+                            <div class="card-body p-2">
+                                <p class="card-text mb-0" style="font-size: 15px; font-weight: bold;">Fulano</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <p for="debateNota" class="form-label">Resultado do quão bom foi o debate: <strong>8</strong></p>
+            </div>
+
+            <div class="mb-4">
+                <p for="tecnicoNota" class="form-label">Resultado do nível técnico da discussão: <strong>10</strong></p>
+
+            </div>
+
+            <div class="mb-4">
+                <p for="argumentoNota" class="form-label">Resultado da
+                    qualidade dos argumentos: <strong>9</strong></p>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label d-block mb-3">Posição vencedora foi:</label>
+
+                <div class="d-flex justify-content-center gap-3" id="posicaoContainer">
+                    <div class="card text-center posicao-card" style="background-color: rgb(81, 135, 235);">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <img src="../image/icone_corrente.png" alt="Libertação" width="200">
+                            <strong style="color: white;" class="p-1">A FAVOR</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+
+</html>
