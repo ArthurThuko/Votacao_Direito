@@ -3,18 +3,20 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const Database = require('better-sqlite3');
 
-// Criação do banco de dados SQLite
+// Criação ou abertura do banco SQLite
 const db = new Database('votacoes.db');
 
-// Criação da tabela, se não existir
+// Criação da tabela com campos compatíveis com seu formulário
 db.prepare(`
   CREATE TABLE IF NOT EXISTS votos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    aluno TEXT NOT NULL,
-    nota1 INTEGER NOT NULL,
-    nota2 INTEGER NOT NULL,
-    nota3 INTEGER NOT NULL,
-    nota4 INTEGER NOT NULL
+    alunoFavor TEXT NOT NULL,
+    alunoContra TEXT NOT NULL,
+    debateNota INTEGER NOT NULL,
+    tecnicoNota INTEGER NOT NULL,
+    argumentoNota INTEGER NOT NULL,
+    posicaoFinal TEXT NOT NULL,
+    dataVoto TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
 `).run();
 
@@ -26,56 +28,32 @@ app.use(bodyParser.json());
 
 // Rota para registrar um voto
 app.post('/votar', (req, res) => {
-  const { aluno, nota1, nota2, nota3, nota4 } = req.body;
+  const {
+    alunoFavor,
+    alunoContra,
+    debateNota,
+    tecnicoNota,
+    argumentoNota,
+    posicaoFinal
+  } = req.body;
 
-  if (!aluno || nota1 == null || nota2 == null || nota3 == null || nota4 == null) {
+  if (!alunoFavor || !alunoContra || debateNota == null || tecnicoNota == null || argumentoNota == null || !posicaoFinal) {
     return res.status(400).json({ error: 'Dados incompletos.' });
   }
 
   const stmt = db.prepare(`
-    INSERT INTO votos (aluno, nota1, nota2, nota3, nota4)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO votos (alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
+    VALUES (?, ?, ?, ?, ?, ?)
   `);
-  stmt.run(aluno, nota1, nota2, nota3, nota4);
+  stmt.run(alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
 
   res.json({ mensagem: 'Voto registrado com sucesso.' });
 });
 
-// Rota para obter os resultados
+// Rota para obter todos os votos
 app.get('/resultados', (req, res) => {
   const votos = db.prepare(`SELECT * FROM votos`).all();
-
-  if (votos.length === 0) {
-    return res.json({ destaque: null, medias: {} });
-  }
-
-  const resultados = {};
-  votos.forEach(voto => {
-    const { aluno, nota1, nota2, nota3, nota4 } = voto;
-    const media = (nota1 + nota2 + nota3 + nota4) / 4;
-
-    if (!resultados[aluno]) {
-      resultados[aluno] = [];
-    }
-
-    resultados[aluno].push(media);
-  });
-
-  const medias = {};
-  let destaque = { aluno: null, media: -1 };
-
-  for (const aluno in resultados) {
-    const todasNotas = resultados[aluno];
-    const mediaFinal = todasNotas.reduce((a, b) => a + b, 0) / todasNotas.length;
-
-    medias[aluno] = mediaFinal.toFixed(2);
-
-    if (mediaFinal > destaque.media) {
-      destaque = { aluno, media: mediaFinal };
-    }
-  }
-
-  res.json({ destaque, medias });
+  res.json({ votos });
 });
 
 app.listen(PORT, () => {

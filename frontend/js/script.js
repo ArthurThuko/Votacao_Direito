@@ -78,34 +78,91 @@ posicaoCards.forEach(card => {
         inputPosicao.value = card.getAttribute('data-value');
     });
 });
+
+document.querySelectorAll('#alunosFavorContainer .aluno-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.getElementById('alunoFavor').value = card.dataset.nome;
+    });
+});
+
+document.querySelectorAll('#alunosContraContainer .aluno-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.getElementById('alunoContra').value = card.dataset.nome;
+    });
+});
+
+document.querySelectorAll('.posicao-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.getElementById('posicaoFinal').value = card.dataset.value;
+    });
+});
+
 //Voto Geral do Debate
 
-document.querySelector("form").addEventListener("submit", async (e) => {
+document.querySelector('form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const alunoFavor = document.getElementById("alunoFavor").value;
-    const alunoContra = document.getElementById("alunoContra").value;
-    const notaDebate = document.getElementById("debateNota").value;
-    const notaTecnica = document.getElementById("tecnicoNota").value;
-    const notaArgumento = document.getElementById("argumentoNota").value;
-    const posicaoFinal = document.getElementById("posicaoFinal").value;
+    const alunoFavor = document.getElementById('alunoFavor').value;
+    const alunoContra = document.getElementById('alunoContra').value;
+    const debateNota = parseInt(document.getElementById('debateNota').value);
+    const tecnicoNota = parseInt(document.getElementById('tecnicoNota').value);
+    const argumentoNota = parseInt(document.getElementById('argumentoNota').value);
+    const posicaoFinal = document.getElementById('posicaoFinal').value;
 
     const dados = {
         alunoFavor,
         alunoContra,
-        notaDebate: parseInt(notaDebate),
-        notaTecnica: parseInt(notaTecnica),
-        notaArgumento: parseInt(notaArgumento),
-        posicaoFinal,
+        debateNota,
+        tecnicoNota,
+        argumentoNota,
+        posicaoFinal
     };
 
-    const resposta = await fetch("http://localhost:3000/votar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados),
+    const response = await fetch('http://localhost:3000/votar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
     });
 
-    const resultado = await resposta.json();
-    alert(resultado.message || "Voto registrado!");
+    const resultado = await response.json();
+    alert(resultado.mensagem || 'Erro ao registrar voto');
 });
 //integração com o Banco de Dados
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch("http://localhost:3000/resultados");
+        const data = await response.json();
+
+        // Atualiza os nomes
+        document.getElementById("nomeDestaqueFavor").textContent = data.destaques.aFavor.nome;
+        document.getElementById("nomeDestaqueContra").textContent = data.destaques.contra.nome;
+
+        // Atualiza as fotos (verifica se existe caminho, senão usa padrão)
+        document.getElementById("fotoDestaqueFavor").src = data.destaques.aFavor.foto || "../image/usuario_generico.png";
+        document.getElementById("fotoDestaqueContra").src = data.destaques.contra.foto || "../image/usuario_generico.png";
+
+        // Atualiza as notas
+        document.getElementById("notaDebate").textContent = data.notas.debate;
+        document.getElementById("notaTecnica").textContent = data.notas.tecnica;
+        document.getElementById("notaArgumento").textContent = data.notas.argumento;
+
+        // Atualiza a posição vencedora
+        const posicao = data.vencedor.toUpperCase();
+        document.getElementById("posicaoVencedora").textContent = posicao;
+
+        // Opcional: mudar imagem ou estilo conforme posição
+        const img = document.querySelector("#posicaoContainer img");
+        if (posicao === "A FAVOR") {
+            img.src = "../image/icone_corrente.png";
+        } else {
+            img.src = "../image/icone_contra.png"; // coloque essa imagem na pasta
+        }
+
+    } catch (err) {
+        console.error("Erro ao buscar dados:", err);
+    }
+});
+//Buscando resultado do Banco de Dados
