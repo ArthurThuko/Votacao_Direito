@@ -53,7 +53,74 @@ app.post('/votar', (req, res) => {
 // Rota para obter todos os votos
 app.get('/resultados', (req, res) => {
   const votos = db.prepare(`SELECT * FROM votos`).all();
-  res.json({ votos });
+
+  if (votos.length === 0) {
+    return res.json({
+      destaques: { aFavor: {}, contra: {} },
+      notas: { debate: 0, tecnica: 0, argumento: 0 },
+      vencedor: "-"
+    });
+  }
+
+  // Calcular médias das notas
+  const somaNotas = votos.reduce((acc, v) => {
+    acc.debate += v.debateNota;
+    acc.tecnica += v.tecnicoNota;
+    acc.argumento += v.argumentoNota;
+    return acc;
+  }, { debate: 0, tecnica: 0, argumento: 0 });
+
+  const qtd = votos.length;
+  const medias = {
+    debate: (somaNotas.debate / qtd).toFixed(2),
+    tecnica: (somaNotas.tecnica / qtd).toFixed(2),
+    argumento: (somaNotas.argumento / qtd).toFixed(2),
+  };
+
+  // Contar votos para alunos a favor e contra
+  const votosAFavor = {};
+  const votosContra = {};
+
+  votos.forEach(voto => {
+    votosAFavor[voto.alunoFavor] = (votosAFavor[voto.alunoFavor] || 0) + 1;
+    votosContra[voto.alunoContra] = (votosContra[voto.alunoContra] || 0) + 1;
+  });
+
+  // Função para achar aluno destaque (mais votos)
+  function destaque(votosObj) {
+    let maxVotos = 0;
+    let alunoDestaque = null;
+    for (const aluno in votosObj) {
+      if (votosObj[aluno] > maxVotos) {
+        maxVotos = votosObj[aluno];
+        alunoDestaque = aluno;
+      }
+    }
+    return alunoDestaque || {};
+  }
+
+  // Aqui você pode mapear o nome para uma foto, ou enviar só o nome
+  const aFavor = { nome: destaque(votosAFavor), foto: "../image/usuario_generico.png" };
+  const contra = { nome: destaque(votosContra), foto: "../image/usuario_generico.png" };
+
+  // Contar votos por posição final para definir vencedor
+  const posicoes = votos.reduce((acc, v) => {
+    acc[v.posicaoFinal] = (acc[v.posicaoFinal] || 0) + 1;
+    return acc;
+  }, {});
+
+  let vencedor = "-";
+  if (posicoes["A FAVOR"] && (!posicoes["CONTRA"] || posicoes["A FAVOR"] > posicoes["CONTRA"])) {
+    vencedor = "A FAVOR";
+  } else if (posicoes["CONTRA"] && (!posicoes["A FAVOR"] || posicoes["CONTRA"] > posicoes["A FAVOR"])) {
+    vencedor = "CONTRA";
+  }
+
+  res.json({
+    destaques: { aFavor, contra },
+    notas: medias,
+    vencedor
+  });
 });
 
 app.listen(PORT, () => {
