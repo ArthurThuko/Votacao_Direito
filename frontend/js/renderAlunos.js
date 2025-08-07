@@ -25,7 +25,7 @@ function renderizarAlunos(alunos, containerId, inputId, classeSelecionado) {
             Array.from(container.children).forEach(c => c.classList.remove(classeSelecionado));
             card.classList.add(classeSelecionado);
             inputHidden.value = aluno.nome;
-            inputHidden.setAttribute("data-foto", aluno.foto); // opcional, se quiser recuperar depois
+            inputHidden.setAttribute("data-foto", aluno.foto);
         };
 
         container.appendChild(card);

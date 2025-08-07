@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Dados simulados
     const alunosFavor = [
         { nome: "Ana", foto: "../image/usuario_generico.png" },
         { nome: "Bruno", foto: "../image/usuario_generico.png" },
