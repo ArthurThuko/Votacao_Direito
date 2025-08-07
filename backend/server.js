@@ -50,6 +50,11 @@ app.post('/votar', (req, res) => {
   res.json({ mensagem: 'Voto registrado com sucesso.' });
 });
 
+app.get('/votos', (req, res) => {
+  const votos = db.prepare('SELECT * FROM votos ORDER BY dataVoto DESC').all();
+  res.json(votos);
+});
+
 // Rota para obter todos os votos
 app.get('/resultados', (req, res) => {
   const votos = db.prepare(`SELECT * FROM votos`).all();
