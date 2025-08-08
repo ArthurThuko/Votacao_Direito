@@ -22,18 +22,18 @@
             <form>
                 <div class="mb-4">
                     <label for="nome" class="form-label">Digite seu nome completo: </label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome..." />
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome..." maxlength="150" required/>
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email"
-                        placeholder="exemplo@dominio.com" />
+                        placeholder="exemplo@dominio.com" maxlength="254" required/>
                 </div>
 
                 <div class="mb-4">
                     <label for="cpf" class="form-label">CPF</label>
-                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" />
+                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required/>
                 </div>
 
                 <div class="mb-4">
@@ -106,6 +106,7 @@
     <script src="../js/components.js"></script>
     <script src="../js/renderAlunos.js"></script>
     <script src="../js/votoForm.js"></script>
+    <script src="../js/mascara.js"></script>
 </body>
 
 </html>

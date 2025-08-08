@@ -25,7 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
-
+        
+        const nome = document.getElementById('nome').value;
+        const email = document.getElementById('email').value;
+        const cpf = document.getElementById('cpf').value;
         const alunoFavor = document.getElementById('alunoFavor').value;
         const alunoContra = document.getElementById('alunoContra').value;
         const debateNota = parseInt(document.getElementById('debateNota').value);
@@ -33,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const argumentoNota = parseInt(document.getElementById('argumentoNota').value);
         const posicaoFinal = document.getElementById('posicaoFinal').value;
 
-        const dados = { alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal };
+        const dados = { nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal };
 
         try {
             const response = await fetch('http://localhost:3000/votar', {
