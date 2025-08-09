@@ -47,13 +47,21 @@ app.post('/votar', (req, res) => {
     return res.status(400).json({ error: 'Dados incompletos.' });
   }
 
-  const stmt = db.prepare(`
+  try {
+    const stmt = db.prepare(`
     INSERT INTO votos (nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
-  stmt.run(nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
+    stmt.run(nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
 
-  res.json({ mensagem: 'Voto registrado com sucesso.' });
+    res.json({ mensagem: 'Voto registrado com sucesso.' });
+  } catch (err) {
+    if (err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+      return res.status(400).json({ error: 'Este CPF já registrou um voto.' });
+    }
+    console.error(err);
+    res.status(500).json({ error: 'Erro no servidor ao registrar voto.' });
+  }
 });
 
 app.get('/votos', (req, res) => {

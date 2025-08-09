@@ -62,55 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const argumentoNota = parseInt(document.getElementById('argumentoNota').value);
         const posicaoFinal = document.getElementById('posicaoFinal').value;
 
-        if (!nome) {
-            alert('Por favor, preencha seu nome completo.');
-            return;
-        }
-
-        if (!email) {
-            alert('Por favor, preencha seu email.');
-            return;
-        }
-
-        if (!cpf) {
-            alert('Por favor, preencha seu CPF.');
-            return;
-        }
-
-        if (!validarCPF(cpf)) {
-            alert('CPF inválido. Por favor, insira um CPF válido.');
-            return;
-        }
-
-        if (!alunoFavor) {
-            alert('Por favor, selecione um aluno destaque A FAVOR.');
-            return;
-        }
-
-        if (!alunoContra) {
-            alert('Por favor, selecione um aluno destaque CONTRA.');
-            return;
-        }
-
-        if (isNaN(debateNota)) {
-            alert('Por favor, informe a nota do debate.');
-            return;
-        }
-
-        if (isNaN(tecnicoNota)) {
-            alert('Por favor, informe a nota do nível técnico da discussão.');
-            return;
-        }
-
-        if (isNaN(argumentoNota)) {
-            alert('Por favor, informe a nota da qualidade dos argumentos.');
-            return;
-        }
-
-        if (!posicaoFinal) {
-            alert('Por favor, selecione sua posição final após o debate.');
-            return;
-        }
+        // Validações
+        if (!nome) return mostrarMensagem('Erro', 'Por favor, preencha seu nome completo.', 'erro');
+        if (!email) return mostrarMensagem('Erro', 'Por favor, preencha seu email.', 'erro');
+        if (!cpf) return mostrarMensagem('Erro', 'Por favor, preencha seu CPF.', 'erro');
+        if (!validarCPF(cpf)) return mostrarMensagem('Erro', 'CPF inválido.', 'erro');
+        if (!alunoFavor) return mostrarMensagem('Erro', 'Selecione um aluno destaque A FAVOR.', 'erro');
+        if (!alunoContra) return mostrarMensagem('Erro', 'Selecione um aluno destaque CONTRA.', 'erro');
+        if (isNaN(debateNota)) return mostrarMensagem('Erro', 'Informe a nota do debate.', 'erro');
+        if (isNaN(tecnicoNota)) return mostrarMensagem('Erro', 'Informe a nota do nível técnico.', 'erro');
+        if (isNaN(argumentoNota)) return mostrarMensagem('Erro', 'Informe a nota da qualidade dos argumentos.', 'erro');
+        if (!posicaoFinal) return mostrarMensagem('Erro', 'Selecione sua posição final.', 'erro');
 
         const dados = { nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal };
 
@@ -122,9 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const resultado = await response.json();
-            alert(resultado.mensagem || 'Erro ao registrar voto');
+
+            if (!response.ok) {
+                return mostrarMensagem('Erro', resultado.error || 'Erro ao registrar voto.', 'erro');
+            }
+
+            mostrarMensagem('Sucesso', resultado.mensagem || 'Voto registrado com sucesso.', 'sucesso');
+
+            // Limpa formulário depois de 2 segundos
+            setTimeout(() => location.reload(), 2000);
         } catch (err) {
-            alert('Erro ao enviar voto');
+            mostrarMensagem('Erro', 'Erro ao enviar voto. Tente novamente.', 'erro');
             console.error(err);
         }
     });
