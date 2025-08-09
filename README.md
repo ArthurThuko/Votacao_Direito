@@ -15,7 +15,6 @@ Este é um sistema de votação online desenvolvido para simulações de júri p
 - **Node.js** – Backend para controle de rotas, manipulação de votos e servidor HTTP.
 - **HTML5/CSS3/Javascript** – Estrutura/Estilização/Funcionalidades das páginas.
 - **Bootstrap 5 (JS + CSS)** – Layout responsivo e componentes prontos para uso.
-- **JSON** – Armazenamento simples dos votos (em versão de teste/local).
 
 ## 📌 Como Executar o Projeto
 
