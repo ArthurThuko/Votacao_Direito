@@ -10,6 +10,9 @@ const db = new Database('votacoes.db');
 db.prepare(`
   CREATE TABLE IF NOT EXISTS votos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL,
+    cpf TEXT NOT NULL UNIQUE,
     alunoFavor TEXT NOT NULL,
     alunoContra TEXT NOT NULL,
     debateNota INTEGER NOT NULL,
@@ -29,6 +32,9 @@ app.use(bodyParser.json());
 // Rota para registrar um voto
 app.post('/votar', (req, res) => {
   const {
+    nome,
+    email,
+    cpf,
     alunoFavor,
     alunoContra,
     debateNota,
@@ -37,17 +43,25 @@ app.post('/votar', (req, res) => {
     posicaoFinal
   } = req.body;
 
-  if (!alunoFavor || !alunoContra || debateNota == null || tecnicoNota == null || argumentoNota == null || !posicaoFinal) {
+  if (nome == null || email == null || cpf == null || !alunoFavor || !alunoContra || debateNota == null || tecnicoNota == null || argumentoNota == null || !posicaoFinal) {
     return res.status(400).json({ error: 'Dados incompletos.' });
   }
 
-  const stmt = db.prepare(`
-    INSERT INTO votos (alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
-    VALUES (?, ?, ?, ?, ?, ?)
+  try {
+    const stmt = db.prepare(`
+    INSERT INTO votos (nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
-  stmt.run(alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
+    stmt.run(nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
 
-  res.json({ mensagem: 'Voto registrado com sucesso.' });
+    res.json({ mensagem: 'Voto registrado com sucesso.' });
+  } catch (err) {
+    if (err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+      return res.status(400).json({ error: 'Este CPF já registrou um voto.' });
+    }
+    console.error(err);
+    res.status(500).json({ error: 'Erro no servidor ao registrar voto.' });
+  }
 });
 
 app.get('/votos', (req, res) => {
