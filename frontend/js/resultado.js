@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('notaArgumento').textContent = data.notas.argumento;
 
             document.getElementById('posicaoVencedora').textContent = data.vencedor;
+            document.getElementById('fotoEquipeVencedora').src = data.fotoVencedor;
+
+            posicaoVencedora.textContent = data.vencedor;
         })
         .catch(error => {
             console.error('Erro ao buscar os resultados:', error);

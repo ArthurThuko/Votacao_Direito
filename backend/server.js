@@ -29,7 +29,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Rota para registrar um voto
+// ---------------- ROTA PARA REGISTRAR VOTO ----------------
 app.post('/votar', (req, res) => {
   const {
     nome,
@@ -43,15 +43,21 @@ app.post('/votar', (req, res) => {
     posicaoFinal
   } = req.body;
 
-  if (nome == null || email == null || cpf == null || !alunoFavor || !alunoContra || debateNota == null || tecnicoNota == null || argumentoNota == null || !posicaoFinal) {
+  if (
+    nome == null || email == null || cpf == null ||
+    !alunoFavor || !alunoContra ||
+    debateNota == null || tecnicoNota == null || argumentoNota == null ||
+    !posicaoFinal
+  ) {
     return res.status(400).json({ error: 'Dados incompletos.' });
   }
 
   try {
     const stmt = db.prepare(`
-    INSERT INTO votos (nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
+      INSERT INTO votos 
+      (nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
     stmt.run(nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
 
     res.json({ mensagem: 'Voto registrado com sucesso.' });
@@ -64,12 +70,13 @@ app.post('/votar', (req, res) => {
   }
 });
 
+// ---------------- LISTAR VOTOS ----------------
 app.get('/votos', (req, res) => {
   const votos = db.prepare('SELECT * FROM votos ORDER BY dataVoto DESC').all();
   res.json(votos);
 });
 
-// Rota para obter todos os votos
+// ---------------- RESULTADOS DA VOTAÇÃO ----------------
 app.get('/resultados', (req, res) => {
   const votos = db.prepare(`SELECT * FROM votos`).all();
 
@@ -77,11 +84,12 @@ app.get('/resultados', (req, res) => {
     return res.json({
       destaques: { aFavor: {}, contra: {} },
       notas: { debate: 0, tecnica: 0, argumento: 0 },
-      vencedor: "-"
+      vencedor: "-",
+      fotoVencedor: "../image/usuario_generico.png"
     });
   }
 
-  // Calcular médias das notas
+  // Médias das notas
   const somaNotas = votos.reduce((acc, v) => {
     acc.debate += v.debateNota;
     acc.tecnica += v.tecnicoNota;
@@ -96,7 +104,7 @@ app.get('/resultados', (req, res) => {
     argumento: (somaNotas.argumento / qtd).toFixed(2),
   };
 
-  // Contar votos para alunos a favor e contra
+  // Destaques individuais
   const votosAFavor = {};
   const votosContra = {};
 
@@ -105,7 +113,6 @@ app.get('/resultados', (req, res) => {
     votosContra[voto.alunoContra] = (votosContra[voto.alunoContra] || 0) + 1;
   });
 
-  // Função para achar aluno destaque (mais votos)
   function destaque(votosObj) {
     let maxVotos = 0;
     let alunoDestaque = null;
@@ -118,27 +125,31 @@ app.get('/resultados', (req, res) => {
     return alunoDestaque || {};
   }
 
-  // Aqui você pode mapear o nome para uma foto, ou enviar só o nome
   const aFavor = { nome: destaque(votosAFavor), foto: "../image/usuario_generico.png" };
   const contra = { nome: destaque(votosContra), foto: "../image/usuario_generico.png" };
 
-  // Contar votos por posição final para definir vencedor
+  // Posição vencedora
   const posicoes = votos.reduce((acc, v) => {
     acc[v.posicaoFinal] = (acc[v.posicaoFinal] || 0) + 1;
     return acc;
   }, {});
 
   let vencedor = "-";
+  let fotoVencedor = "../image/usuario_generico.png";
+
   if (posicoes["A FAVOR"] && (!posicoes["CONTRA"] || posicoes["A FAVOR"] > posicoes["CONTRA"])) {
     vencedor = "A FAVOR";
+    fotoVencedor = "../image/icone_corrente.png";   // Ícone de "libertação"
   } else if (posicoes["CONTRA"] && (!posicoes["A FAVOR"] || posicoes["CONTRA"] > posicoes["A FAVOR"])) {
     vencedor = "CONTRA";
+    fotoVencedor = "../image/icone_sirene.png";    // Ícone de "condenação"
   }
 
   res.json({
     destaques: { aFavor, contra },
     notas: medias,
-    vencedor
+    vencedor,
+    fotoVencedor
   });
 });
 
