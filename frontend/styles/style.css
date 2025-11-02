@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-    background-image: radial-gradient(circle at center, rgba(63, 63, 63, 0.1), rgba(99, 99, 99, 0.9));
+    background-image: url(../image/Imagem_fundo.jpg);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     transition: background 0.5s;
 }
@@ -16,12 +16,26 @@ body {
 }
 
 .hero h1 {
-    font-size: 2.8rem;
-    font-weight: bold;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #0734ff, #ff2222);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: 3px solid #a407ff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 25px rgba(255, 193, 7, 0.4);
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    background-color: rgba(15, 15, 15, 0.76);
+    color: #a908f3;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 .card-hover {

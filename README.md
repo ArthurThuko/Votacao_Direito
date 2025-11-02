@@ -1,5 +1,5 @@
 
-# 🧑‍⚖️ Sistema de Votação para Júri Simulado de Direito Penal
+# 🧑‍⚖️ Sistema de Votação para Júri Simulado
 
 Este é um sistema de votação online desenvolvido para simulações de júri popular em ambientes acadêmicos ou eventos jurídicos. A aplicação permite que usuários votem anonimamente sobre o veredito de um réu, visualizem os resultados em tempo real e conheçam o desenvolvedor do sistema.
 
