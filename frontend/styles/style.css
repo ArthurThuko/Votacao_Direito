@@ -74,6 +74,11 @@ footer {
     color: #C9A13C;
 }
 
+#alunosFavorContainer,
+#alunosContraContainer {
+    gap: 4px;
+}
+
 .aluno-card {
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -83,9 +88,9 @@ footer {
 }
 
 .selecionado-favor {
-    background-color: #7da4c4;
+    background-color: #4aec57;
     transform: scale(1.10);
-    box-shadow: 0 5px 20px #0d6efd4d;
+    box-shadow: 0 5px 20px #2f9237;
 }
 
 .selecionado-contra {
@@ -118,4 +123,10 @@ footer {
 .card:hover {
     transform: translateY(-10px) scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.selecionado-geral {
+    box-shadow: 0 5px 20px #C9A13C;
+    transform: scale(1.10);
+    background-color: rgb(201, 161, 60);
 }

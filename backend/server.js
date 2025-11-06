@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 const Database = require('better-sqlite3');
+
+// Caminho absoluto para a pasta de imagens dentro do frontend
+const imagePath = path.join(__dirname, "../frontend/image");
 
 // Criação ou abertura do banco SQLite
 const db = new Database('votacoes.db');
 
-// Criação da tabela com campos compatíveis com seu formulário
+// Criação da tabela com o campo alunoGeral
 db.prepare(`
   CREATE TABLE IF NOT EXISTS votos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,6 +19,7 @@ db.prepare(`
     cpf TEXT NOT NULL UNIQUE,
     alunoFavor TEXT NOT NULL,
     alunoContra TEXT NOT NULL,
+    alunoGeral TEXT NOT NULL,
     debateNota INTEGER NOT NULL,
     tecnicoNota INTEGER NOT NULL,
     argumentoNota INTEGER NOT NULL,
@@ -29,6 +34,9 @@ const PORT = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// Servindo imagens da pasta frontend/image
+app.use("/image", express.static(imagePath));
+
 // ---------------- ROTA PARA REGISTRAR VOTO ----------------
 app.post('/votar', (req, res) => {
   const {
@@ -37,6 +45,7 @@ app.post('/votar', (req, res) => {
     cpf,
     alunoFavor,
     alunoContra,
+    alunoGeral,
     debateNota,
     tecnicoNota,
     argumentoNota,
@@ -44,8 +53,8 @@ app.post('/votar', (req, res) => {
   } = req.body;
 
   if (
-    nome == null || email == null || cpf == null ||
-    !alunoFavor || !alunoContra ||
+    !nome || !email || !cpf ||
+    !alunoFavor || !alunoContra || !alunoGeral ||
     debateNota == null || tecnicoNota == null || argumentoNota == null ||
     !posicaoFinal
   ) {
@@ -55,10 +64,10 @@ app.post('/votar', (req, res) => {
   try {
     const stmt = db.prepare(`
       INSERT INTO votos 
-      (nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      (nome, email, cpf, alunoFavor, alunoContra, alunoGeral, debateNota, tecnicoNota, argumentoNota, posicaoFinal)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
-    stmt.run(nome, email, cpf, alunoFavor, alunoContra, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
+    stmt.run(nome, email, cpf, alunoFavor, alunoContra, alunoGeral, debateNota, tecnicoNota, argumentoNota, posicaoFinal);
 
     res.json({ mensagem: 'Voto registrado com sucesso.' });
   } catch (err) {
@@ -82,10 +91,10 @@ app.get('/resultados', (req, res) => {
 
   if (votos.length === 0) {
     return res.json({
-      destaques: { aFavor: {}, contra: {} },
+      destaques: { aFavor: {}, contra: {}, geral: {} },
       notas: { debate: 0, tecnica: 0, argumento: 0 },
       vencedor: "-",
-      fotoVencedor: "../image/usuario_generico.png"
+      fotoVencedor: "/image/usuario_generico.png"
     });
   }
 
@@ -104,15 +113,18 @@ app.get('/resultados', (req, res) => {
     argumento: (somaNotas.argumento / qtd).toFixed(2),
   };
 
-  // Destaques individuais
+  // Contagem dos votos de destaque
   const votosAFavor = {};
   const votosContra = {};
+  const votosGerais = {};
 
   votos.forEach(voto => {
     votosAFavor[voto.alunoFavor] = (votosAFavor[voto.alunoFavor] || 0) + 1;
     votosContra[voto.alunoContra] = (votosContra[voto.alunoContra] || 0) + 1;
+    votosGerais[voto.alunoGeral] = (votosGerais[voto.alunoGeral] || 0) + 1;
   });
 
+  // Função para descobrir o aluno mais votado
   function destaque(votosObj) {
     let maxVotos = 0;
     let alunoDestaque = null;
@@ -125,28 +137,37 @@ app.get('/resultados', (req, res) => {
     return alunoDestaque || {};
   }
 
-  const aFavor = { nome: destaque(votosAFavor), foto: "../image/usuario_generico.png" };
-  const contra = { nome: destaque(votosContra), foto: "../image/usuario_generico.png" };
+  function getFotoAluno(nome) {
+    const nomeArquivo = nome
+      ? nome.toLowerCase().replace(/\s+/g, "_") + ".JPG"
+      : "icone_corrente.png";
 
-  // Posição vencedora
+    return `/image/${nomeArquivo}`;
+  }
+
+  const aFavor = { nome: destaque(votosAFavor), foto: getFotoAluno(destaque(votosAFavor)) };
+  const contra = { nome: destaque(votosContra), foto: getFotoAluno(destaque(votosContra)) };
+  const geral = { nome: destaque(votosGerais), foto: getFotoAluno(destaque(votosGerais)) };
+
+  // Posição vencedora (A FAVOR / CONTRA)
   const posicoes = votos.reduce((acc, v) => {
     acc[v.posicaoFinal] = (acc[v.posicaoFinal] || 0) + 1;
     return acc;
   }, {});
 
   let vencedor = "-";
-  let fotoVencedor = "../image/usuario_generico.png";
+  let fotoVencedor = "/image/usuario_generico.png";
 
   if (posicoes["A FAVOR"] && (!posicoes["CONTRA"] || posicoes["A FAVOR"] > posicoes["CONTRA"])) {
     vencedor = "A FAVOR";
-    fotoVencedor = "../image/icone_corrente.png";   // Ícone de "libertação"
+    fotoVencedor = "/image/icone_corrente.png";
   } else if (posicoes["CONTRA"] && (!posicoes["A FAVOR"] || posicoes["CONTRA"] > posicoes["A FAVOR"])) {
     vencedor = "CONTRA";
-    fotoVencedor = "../image/icone_sirene.png";    // Ícone de "condenação"
+    fotoVencedor = "/image/icone_sirene.png";
   }
 
   res.json({
-    destaques: { aFavor, contra },
+    destaques: { aFavor, contra, geral },
     notas: medias,
     vencedor,
     fotoVencedor
