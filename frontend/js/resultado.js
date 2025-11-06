@@ -1,24 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:3000/resultados')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('nomeDestaqueFavor').textContent = data.destaques.aFavor.nome || 'Nenhum';
-            document.getElementById('fotoDestaqueFavor').src = data.destaques.aFavor.foto;
+    fetch("http://localhost:3000/resultados")
+        .then((res) => res.json())
+        .then((data) => {
+            // --- DESTAQUES ---
+            document.getElementById("nomeDestaqueFavor").textContent = data.destaques.aFavor.nome || "-";
+            document.getElementById("fotoDestaqueFavor").src = "http://localhost:3000" + data.destaques.aFavor.foto;
 
-            document.getElementById('nomeDestaqueContra').textContent = data.destaques.contra.nome || 'Nenhum';
-            document.getElementById('fotoDestaqueContra').src = data.destaques.contra.foto;
+            document.getElementById("nomeDestaqueContra").textContent = data.destaques.contra.nome || "-";
+            document.getElementById("fotoDestaqueContra").src = "http://localhost:3000" + data.destaques.contra.foto;
 
-            document.getElementById('notaDebate').textContent = data.notas.debate;
-            document.getElementById('notaTecnica').textContent = data.notas.tecnica;
-            document.getElementById('notaArgumento').textContent = data.notas.argumento;
+            document.getElementById("nomeDestaqueGeral").textContent = data.destaques.geral.nome || "-";
+            document.getElementById("fotoDestaqueGeral").src = "http://localhost:3000" + data.destaques.geral.foto;
 
-            document.getElementById('posicaoVencedora').textContent = data.vencedor;
-            document.getElementById('fotoEquipeVencedora').src = data.fotoVencedor;
+            // --- NOTAS ---
+            document.getElementById("notaDebate").textContent = data.notas.debate;
+            document.getElementById("notaTecnica").textContent = data.notas.tecnica;
+            document.getElementById("notaArgumento").textContent = data.notas.argumento;
 
-            posicaoVencedora.textContent = data.vencedor;
+            // --- POSIÇÃO VENCEDORA ---
+            document.getElementById("posicaoVencedora").textContent = data.vencedor;
+            document.getElementById("fotoEquipeVencedora").src = "http://localhost:3000" + data.fotoVencedor;
         })
-        .catch(error => {
-            console.error('Erro ao buscar os resultados:', error);
-            alert('Erro ao carregar os resultados da votação.');
+        .catch((err) => {
+            console.error("Erro ao carregar resultados:", err);
         });
 });
