@@ -37,6 +37,12 @@ app.use(bodyParser.json());
 // Servindo imagens da pasta frontend/image
 app.use("/image", express.static(imagePath));
 
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'pages', 'index.html'));
+});
+
 // ---------------- ROTA PARA REGISTRAR VOTO ----------------
 app.post('/votar', (req, res) => {
   const {
