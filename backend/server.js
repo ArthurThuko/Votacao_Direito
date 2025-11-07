@@ -155,7 +155,7 @@ app.get('/resultados', (req, res) => {
   const contra = { nome: destaque(votosContra), foto: getFotoAluno(destaque(votosContra)) };
   const geral = { nome: destaque(votosGerais), foto: getFotoAluno(destaque(votosGerais)) };
 
-  // Posição vencedora (A FAVOR / CONTRA)
+  // Posição vencedora (DEFESA / ACUSAÇÃO)
   const posicoes = votos.reduce((acc, v) => {
     acc[v.posicaoFinal] = (acc[v.posicaoFinal] || 0) + 1;
     return acc;
@@ -164,11 +164,11 @@ app.get('/resultados', (req, res) => {
   let vencedor = "-";
   let fotoVencedor = "/image/usuario_generico.png";
 
-  if (posicoes["A FAVOR"] && (!posicoes["CONTRA"] || posicoes["A FAVOR"] > posicoes["CONTRA"])) {
-    vencedor = "A FAVOR";
+  if (posicoes["DEFESA"] && (!posicoes["ACUSAÇÃO"] || posicoes["DEFESA"] > posicoes["ACUSAÇÃO"])) {
+    vencedor = "DEFESA";
     fotoVencedor = "/image/icone_corrente.png";
-  } else if (posicoes["CONTRA"] && (!posicoes["A FAVOR"] || posicoes["CONTRA"] > posicoes["A FAVOR"])) {
-    vencedor = "CONTRA";
+  } else if (posicoes["ACUSAÇÃO"] && (!posicoes["DEFESA"] || posicoes["ACUSAÇÃO"] > posicoes["DEFESA"])) {
+    vencedor = "ACUSAÇÃO";
     fotoVencedor = "/image/icone_sirene.png";
   }
 

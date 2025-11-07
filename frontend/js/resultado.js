@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const bg = document.getElementById("backgroundVencedor");
 
-            if (data.vencedor === "CONTRA") {
+            if (data.vencedor === "ACUSAÇÃO") {
                 bg.style.backgroundColor = "rgb(226, 79, 79)";
             } else {
                 bg.style.backgroundColor = "rgb(81, 135, 235)";
