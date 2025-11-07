@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- POSIÇÃO VENCEDORA ---
             document.getElementById("posicaoVencedora").textContent = data.vencedor;
             document.getElementById("fotoEquipeVencedora").src = "http://localhost:3000" + data.fotoVencedor;
+
+            const bg = document.getElementById("backgroundVencedor");
+
+            if (data.vencedor === "CONTRA") {
+                bg.style.backgroundColor = "rgb(226, 79, 79)";
+            } else {
+                bg.style.backgroundColor = "rgb(81, 135, 235)";
+            }
         })
         .catch((err) => {
             console.error("Erro ao carregar resultados:", err);

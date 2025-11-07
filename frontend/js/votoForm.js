@@ -100,8 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return mostrarMensagem('Erro', resultado.error || 'Erro ao registrar voto.', 'erro');
             }
 
-            mostrarMensagem('Sucesso', resultado.mensagem || 'Voto registrado com sucesso.', 'sucesso');
-            setTimeout(() => location.reload(), 2000);
+            alert(resultado.mensagem || 'Voto registrado com sucesso!');
         } catch (err) {
             mostrarMensagem('Erro', 'Erro ao enviar voto. Tente novamente.', 'erro');
             console.error(err);
