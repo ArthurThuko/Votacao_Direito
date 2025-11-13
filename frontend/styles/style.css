@@ -140,7 +140,6 @@ footer {
 @media (max-width: 768px) {
     .posicao-card img {
         width: 70%;
-        /* Reduz a imagem em telas menores */
     }
 }
 

@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const alunosFavor = [
-        { nome: "Nathalia Sinfronio", foto: "../image/Nathalia_Sinfronio.JPG" },
-        { nome: "Leticia Rocha", foto: "../image/Leticia_Rocha.JPG" },
-        { nome: "Douglas Barbosa", foto: "../image/Douglas_Barbosa.JPG" },
+        { nome: "Nathalia Sinfronio", foto: "../image/nathalia_sinfronio.JPG" },
+        { nome: "Leticia Rocha", foto: "../image/leticia_rocha.JPG" },
+        { nome: "Douglas Barbosa", foto: "../image/douglas_barbosa.JPG" },
     ];
 
     const alunosContra = [
-        { nome: "Rian Paulo", foto: "../image/Rian_Paulo.JPG" },
-        { nome: "Kennedy Lacerda", foto: "../image/Kennedy_Lacerda.JPG" },
-        { nome: "Leandro Oliveira", foto: "../image/Leandro_Oliveira.JPG" },
+        { nome: "Rian Paulo", foto: "../image/rian_paulo.JPG" },
+        { nome: "Kennedy Lacerda", foto: "../image/kennedy_lacerda.JPG" },
+        { nome: "Leandro Oliveira", foto: "../image/leandro_oliveira.JPG" },
     ];
 
     const alunosGeral = [...alunosFavor, ...alunosContra];
@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/votar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dados)
-            });
+const response = await fetch('../../backend/votar.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados)
+});
 
             const resultado = await response.json();
 
@@ -101,9 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             alert(resultado.mensagem || 'Voto registrado com sucesso!');
+            location.reload();
         } catch (err) {
             mostrarMensagem('Erro', 'Erro ao enviar voto. Tente novamente.', 'erro');
             console.error(err);
         }
     });
-});
+});	
